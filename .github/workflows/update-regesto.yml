@@ -1,0 +1,93 @@
+name: update regesto
+
+# Watches for a new regesto release and points the formula at it.
+#
+# The watching happens here rather than being pushed from the regesto repo on
+# release, because a cross-repository push would need a long-lived token stored
+# as a secret. Releases are public, so this side needs no credential at all: it
+# reads them anonymously and writes only to its own repository, with the token
+# GitHub issues for this run.
+#
+# The cost is up to six hours of lag. Use the "Run workflow" button when that
+# matters.
+on:
+  schedule:
+    - cron: "23 */6 * * *" # off the hour; scheduled runs get delayed at :00
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-regesto
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: find the latest release
+        id: latest
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="$(gh release view --repo prof18/regesto --json tagName --jq .tagName)"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "latest release is $tag"
+
+      - name: rewrite the formula
+        id: rewrite
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.latest.outputs.tag }}
+        run: |
+          set -euo pipefail
+          gh release download "$TAG" --repo prof18/regesto --pattern checksums.txt --dir "$RUNNER_TEMP"
+          python3 script/update-formula.py Formula/regesto.rb "$TAG" "$RUNNER_TEMP/checksums.txt"
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Everything below runs only when something changed, and all of it must
+      # pass before the commit is pushed. A tap serving a formula that does not
+      # install is worse than a tap lagging a release.
+      - name: check it is still valid Ruby
+        if: steps.rewrite.outputs.changed == 'true'
+        run: ruby -c Formula/regesto.rb
+
+      - name: check every archive it now points at exists
+        if: steps.rewrite.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          grep -o 'https://[^"]*\.tar\.gz' Formula/regesto.rb | while read -r url; do
+            code="$(curl -sSL -o /dev/null -w '%{http_code}' "$url")"
+            echo "$code  $url"
+            [ "$code" = "200" ] || exit 1
+          done
+
+      - name: install it for real
+        if: steps.rewrite.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          brew install --formula ./Formula/regesto.rb
+          brew test regesto
+
+      - name: commit
+        if: steps.rewrite.outputs.changed == 'true'
+        env:
+          TAG: ${{ steps.latest.outputs.tag }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "regesto ${TAG}
+
+          Formula updated from the release's own checksums.txt. Verified before
+          pushing: valid Ruby, every archive reachable, and brew install plus
+          brew test on this runner."
+          git push
