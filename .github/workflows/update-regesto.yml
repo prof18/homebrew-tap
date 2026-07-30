@@ -24,7 +24,11 @@ concurrency:
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    # macOS, because Homebrew is preinstalled there and is not on the Linux
+    # runners, and because a formula for a tool whose scheduler is launchd
+    # should be proved on the platform most of its users are on. The job exits
+    # in seconds when there is nothing to do, which is almost every run.
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v5
 
