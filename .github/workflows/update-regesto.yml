@@ -60,6 +60,24 @@ jobs:
       # Everything below runs only when something changed, and all of it must
       # pass before the commit is pushed. A tap serving a formula that does not
       # install is worse than a tap lagging a release.
+
+      # Committed before it is verified, because `brew tap <name> <path>` clones
+      # the repository and therefore sees the last commit, not the working tree.
+      # Nothing leaves this runner until every check below has passed.
+      - name: commit locally
+        if: steps.rewrite.outputs.changed == 'true'
+        env:
+          TAG: ${{ steps.latest.outputs.tag }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "regesto ${TAG}
+
+          Formula updated from the release's own checksums.txt. Verified before
+          pushing: valid Ruby, every archive reachable, and brew install plus
+          brew test on this runner."
+
       - name: check it is still valid Ruby
         if: steps.rewrite.outputs.changed == 'true'
         run: ruby -c Formula/regesto.rb
@@ -85,17 +103,6 @@ jobs:
           brew install prof18/tap/regesto
           brew test prof18/tap/regesto
 
-      - name: commit
+      - name: push
         if: steps.rewrite.outputs.changed == 'true'
-        env:
-          TAG: ${{ steps.latest.outputs.tag }}
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -am "regesto ${TAG}
-
-          Formula updated from the release's own checksums.txt. Verified before
-          pushing: valid Ruby, every archive reachable, and brew install plus
-          brew test on this runner."
-          git push
+        run: git push
