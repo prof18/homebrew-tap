@@ -78,8 +78,12 @@ jobs:
         if: steps.rewrite.outputs.changed == 'true'
         run: |
           set -euo pipefail
-          brew install --formula ./Formula/regesto.rb
-          brew test regesto
+          # Homebrew refuses a formula given as a bare path, so tap this very
+          # checkout and install through it — which is also exactly the path a
+          # user takes.
+          brew tap prof18/tap "$PWD"
+          brew install prof18/tap/regesto
+          brew test prof18/tap/regesto
 
       - name: commit
         if: steps.rewrite.outputs.changed == 'true'
