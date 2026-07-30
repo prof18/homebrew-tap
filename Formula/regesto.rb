@@ -6,7 +6,7 @@
 class Regesto < Formula
   desc "Knowledge base your coding agents consult before they act"
   homepage "https://github.com/prof18/regesto"
-  version "0.1.1"
+  version "0.0.0"
   license "MIT"
 
   on_macos do
