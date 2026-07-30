@@ -48,7 +48,8 @@ class Regesto < Formula
   end
 
   test do
-    assert_match "regesto #{version}", shell_output("#{bin}/regesto version")
+    # Tags carry the "v"; Homebrew's `version` does not.
+    assert_match "regesto v#{version}", shell_output("#{bin}/regesto version")
 
     # The binary's real job is scaffolding a working instance, so the test
     # does that rather than only checking that it runs.
