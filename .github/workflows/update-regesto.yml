@@ -8,11 +8,12 @@ name: update regesto
 # reads them anonymously and writes only to its own repository, with the token
 # GitHub issues for this run.
 #
-# The cost is up to six hours of lag. Use the "Run workflow" button when that
-# matters.
+# Weekly, because releases here are rare and a check that finds nothing 27
+# times out of 28 is just noise. Use the "Run workflow" button to pick up a
+# release the moment it is cut.
 on:
   schedule:
-    - cron: "23 */6 * * *" # off the hour; scheduled runs get delayed at :00
+    - cron: "23 7 * * 1" # Mondays, off the hour; scheduled runs are delayed at :00
   workflow_dispatch:
 
 permissions:
