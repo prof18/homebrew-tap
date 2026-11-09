@@ -5,6 +5,7 @@ Homebrew formulae for my tools.
 ```bash
 brew install prof18/tap/regesto
 brew install prof18/tap/pcenter
+brew install prof18/tap/claudup
 ```
 
 ## regesto
@@ -28,10 +29,18 @@ macOS and Linux only: Homebrew has no Windows channel. Windows CI takes the rele
 `.zip` by pinned URL and verifies it against `checksums.txt` — see
 [the CI guide](https://github.com/prof18/pcenter-cli/blob/main/docs/CI.md).
 
+## claudup
+
+Keeps one Claude Code Remote Control bridge running per project on an always-on Mac, each
+supervised by its own LaunchAgent. [github.com/prof18/claudup](https://github.com/prof18/claudup)
+
+Release binaries, for the same reason as above. macOS only.
+
 ## How this stays current
 
-One workflow per tool — [`update-regesto.yml`](.github/workflows/update-regesto.yml) and
-[`update-pcenter.yml`](.github/workflows/update-pcenter.yml) — each checking weekly for a new
+One workflow per tool — [`update-regesto.yml`](.github/workflows/update-regesto.yml),
+[`update-pcenter.yml`](.github/workflows/update-pcenter.yml) and
+[`update-claudup.yml`](.github/workflows/update-claudup.yml) — each checking weekly for a new
 release and rewriting its formula from that release's own `checksums.txt`. They write only to
 this repository, using the token GitHub issues for the run — there is no stored credential
 anywhere, in either direction.
