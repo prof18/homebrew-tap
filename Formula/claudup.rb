@@ -8,18 +8,18 @@
 class Claudup < Formula
   desc "Keep one Claude Code Remote Control bridge running per project"
   homepage "https://github.com/prof18/claudup"
-  version "0.0.0"
+  version "0.1.0"
   license "MIT"
 
   depends_on :macos
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/prof18/claudup/releases/download/v0.0.0/claudup_v0.0.0_darwin_arm64.tar.gz"
-      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+      url "https://github.com/prof18/claudup/releases/download/v0.1.0/claudup_v0.1.0_darwin_arm64.tar.gz"
+      sha256 "95de069204bae6b6a13f6323b3185ad3e2208ce655bb3bf60c0e03d48881e703"
     else
-      url "https://github.com/prof18/claudup/releases/download/v0.0.0/claudup_v0.0.0_darwin_amd64.tar.gz"
-      sha256 "1111111111111111111111111111111111111111111111111111111111111111"
+      url "https://github.com/prof18/claudup/releases/download/v0.1.0/claudup_v0.1.0_darwin_amd64.tar.gz"
+      sha256 "9052a19749b2544fdbb829898920c9bd9a79f80dde6cb822e25d38ae0a0f5e7e"
     end
   end
 
