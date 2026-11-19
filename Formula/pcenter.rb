@@ -9,26 +9,26 @@
 class Pcenter < Formula
   desc "Command-line tool for the Microsoft Store (Partner Center)"
   homepage "https://github.com/prof18/pcenter-cli"
-  version "0.0.4"
+  version "0.0.5"
   license "Apache-2.0"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/prof18/pcenter-cli/releases/download/v0.0.4/pcenter_v0.0.4_darwin_arm64.tar.gz"
-      sha256 "35846f58ec6e2a8c18f0cfff43dd1355e9f74b060b1344824ea78aab399b60a8"
+      url "https://github.com/prof18/pcenter-cli/releases/download/v0.0.5/pcenter_v0.0.5_darwin_arm64.tar.gz"
+      sha256 "3aee63f56f47138caa88f62b1c2fb3ed3872c283fd9c47ecd1186a3e4f200c13"
     else
-      url "https://github.com/prof18/pcenter-cli/releases/download/v0.0.4/pcenter_v0.0.4_darwin_amd64.tar.gz"
-      sha256 "5fadad3f8304331061aa4e50bab577dc225e2596c7d84c4df391497baffec130"
+      url "https://github.com/prof18/pcenter-cli/releases/download/v0.0.5/pcenter_v0.0.5_darwin_amd64.tar.gz"
+      sha256 "9f37ef6a9dd1c15a06459e0d3cad7f9dbc59eba1a556408b60a1db172924145e"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/prof18/pcenter-cli/releases/download/v0.0.4/pcenter_v0.0.4_linux_arm64.tar.gz"
-      sha256 "1308ed49855bc9670833a6ecb508001a108f1dd3192064a5d33181da80f1ea0a"
+      url "https://github.com/prof18/pcenter-cli/releases/download/v0.0.5/pcenter_v0.0.5_linux_arm64.tar.gz"
+      sha256 "f084d86ab9af751e1ee70c123a15c3e97ff22a76bd6abba928c8d40f0aae148c"
     else
-      url "https://github.com/prof18/pcenter-cli/releases/download/v0.0.4/pcenter_v0.0.4_linux_amd64.tar.gz"
-      sha256 "4425f9d31625e84d5565144826e892d0932ae91e6756a0afb7d64e8e66dd018c"
+      url "https://github.com/prof18/pcenter-cli/releases/download/v0.0.5/pcenter_v0.0.5_linux_amd64.tar.gz"
+      sha256 "a68561a3c05452f2d6291d532084cfaae09289ef535156510a4931d2bc695b5a"
     end
   end
 
