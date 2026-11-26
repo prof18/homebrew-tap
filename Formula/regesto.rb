@@ -6,26 +6,26 @@
 class Regesto < Formula
   desc "Knowledge base your coding agents consult before they act"
   homepage "https://github.com/prof18/regesto"
-  version "0.8.2"
+  version "0.8.3"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/prof18/regesto/releases/download/v0.8.2/regesto_v0.8.2_darwin_arm64.tar.gz"
-      sha256 "e61b2fee9c547386235d81361c2de2416209b2d1f6c048db520947b0e081676b"
+      url "https://github.com/prof18/regesto/releases/download/v0.8.3/regesto_v0.8.3_darwin_arm64.tar.gz"
+      sha256 "e725e30cbf0c5d8fa286702658f577bf03506411390a90a8614b4cb3e16a79d5"
     else
-      url "https://github.com/prof18/regesto/releases/download/v0.8.2/regesto_v0.8.2_darwin_amd64.tar.gz"
-      sha256 "0b11377113f263a118178912313993072c03d77e9c867f06a351978eca1fce69"
+      url "https://github.com/prof18/regesto/releases/download/v0.8.3/regesto_v0.8.3_darwin_amd64.tar.gz"
+      sha256 "d3cb3f974864a7b93eb6e0173e5c922d60d277306ef72c1f6627ab9619875980"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/prof18/regesto/releases/download/v0.8.2/regesto_v0.8.2_linux_arm64.tar.gz"
-      sha256 "397ce71a3d182496fc30be82687c4ec24e825e92cde784f9e9429423f1f82d98"
+      url "https://github.com/prof18/regesto/releases/download/v0.8.3/regesto_v0.8.3_linux_arm64.tar.gz"
+      sha256 "0ad3c3faf76d02c8e7e4e45c35d8091d69c51db799697b71507e13a6a18a8505"
     else
-      url "https://github.com/prof18/regesto/releases/download/v0.8.2/regesto_v0.8.2_linux_amd64.tar.gz"
-      sha256 "1e334861c52e55b5ecb56e06e0f2c193266b38bb19554fa95f8f89edea2cbc50"
+      url "https://github.com/prof18/regesto/releases/download/v0.8.3/regesto_v0.8.3_linux_amd64.tar.gz"
+      sha256 "7435cfed6d1f02bec5ed10fc4a216362eae2cda17e5407ba4f6a6f98c9305366"
     end
   end
 
